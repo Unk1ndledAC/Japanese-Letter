@@ -1,0 +1,231 @@
+%% envelope-yoko.sty -- Horizontal Envelope Style
+%% Japanese Envelope Template for Horizontal Writing (横式封筒)
+%%
+%% Features:
+%% - Recipient info: center-right of envelope front
+%% - Sender info: top-left of envelope front
+%% - Stamp: top-right corner
+%% - Recipient postal code on separate line
+%%
+%% Usage:
+%%   \documentclass[14pt]{jlreq}
+%%   \usepackage{envelope-yoko}
+%%   \makeenvelope
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{envelope-yoko}[2024/12 Japanese Horizontal Envelope Style]
+
+%% ================================================
+%% Package Options
+%% ================================================
+\RequirePackage{geometry}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+
+%% ================================================
+%% Envelope Size Options
+%% ================================================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=envYoko,
+  prefix=envYoko@
+}
+
+\DeclareStringOption{size}[you]
+\DeclareVoidOption{you}{\def\@envSize{you}}  % You-gata 1 (120mm x 176mm)
+\DeclareVoidOption{y1}{\def\@envSize{y1}}     % You-gata 1
+\DeclareVoidOption{y2}{\def\@envSize{y2}}     % You-gata 2 (114mm x 162mm)
+\DeclareVoidOption{y3}{\def\@envSize{y3}}     % You-gata 3 (120mm x 235mm)
+\ProcessKeyvalOptions*\relax
+
+%% ================================================
+%% Envelope Dimensions
+%% ================================================
+\newlength{\@envWidth}
+\newlength{\@envHeight}
+
+\ifthenelse{\equal{\@envSize}{y1}}{%
+  \setlength{\@envWidth}{176mm}%
+  \setlength{\@envHeight}{120mm}%
+}{%
+  \ifthenelse{\equal{\@envSize}{y2}}{%
+    \setlength{\@envWidth}{162mm}%
+    \setlength{\@envHeight}{114mm}%
+  }{%
+    \ifthenelse{\equal{\@envSize}{y3}}{%
+      \setlength{\@envWidth}{235mm}%
+      \setlength{\@envHeight}{120mm}%
+    }{%
+      %% Default: You-gata 1
+      \setlength{\@envWidth}{176mm}%
+      \setlength{\@envHeight}{120mm}%
+    }%
+  }%
+}
+
+%% ================================================
+%% Sender/Recipient Information
+%% ================================================
+\def\@recipientName{}%
+\def\@recipientAddress{}%
+\def\@recipientPostalCode{}%
+
+\def\@senderName{}%
+\def\@senderAddress{}%
+\def\@senderPostalCode{}%
+
+\def\@postDate{}%
+
+%% Setter Commands
+\def\setrecipientname#1{\def\@recipientName{#1}}
+\def\setrecipientaddress#1{\def\@recipientAddress{#1}}
+\def\setrecipientpostalcode#1{\def\@recipientPostalCode{#1}}
+
+\def\setsendername#1{\def\@senderName{#1}}
+\def\setsenderaddress#1{\def\@senderAddress{#1}}
+\def\setsenderpostalcode#1{\def\@senderPostalCode{#1}}
+
+\def\setpostdate#1{\def\@postDate{#1}}
+
+%% ================================================
+%% Envelope Layout
+%% ================================================
+
+%% \makeenvelope -- Create full envelope (front + back)
+\def\makeenvelope{%
+  \clearpage
+  \thispagestyle{empty}%
+  \newgeometry{
+    paper=\@envWidth \@envHeight,
+    layout=\@envWidth \@envHeight,
+    nohead,
+    nofoot,
+    margin=8mm
+  }%
+  \parindent=0pt
+  \linespread{1.3}
+
+  %% ===== Top Left: Sender Info =====
+  \hbox to \linewidth{%
+    \vtop{%
+      \advance\hsize by -3cm
+      \raggedright
+      \@senderPostalCode \par
+      \@senderAddress \par
+      \@senderName
+    }%
+  }
+
+  \vspace{5mm}
+
+  %% ===== Center-Right: Recipient Info =====
+  \hbox to \linewidth{%
+    \hfill
+    \vtop{%
+      \advance\hsize by -2cm
+      \raggedleft
+      %% Recipient Postal Code
+      \@recipientPostalCode \par
+      \vspace{2mm}
+      %% Recipient Address
+      \@recipientAddress \par
+      \vspace{2mm}
+      %% Recipient Name
+      \large\@recipientName 様
+    }%
+  }
+
+  \vfill
+
+  %% ===== Bottom Right: Seal Mark (optional) =====
+  %% \hbox to \linewidth{%
+  %%   \hfill
+  %%   \Large\textbf{封}
+  %% }%
+
+  \newpage
+  \restoregeometry
+}
+
+%% \makeenvelopefront -- Front side only
+\def\makeenvelopefront{%
+  \clearpage
+  \thispagestyle{empty}%
+  \newgeometry{
+    paper=\@envWidth \@envHeight,
+    layout=\@envWidth \@envHeight,
+    nohead,
+    nofoot,
+    margin=8mm
+  }%
+  \parindent=0pt
+  \linespread{1.3}
+
+  %% Top Left: Sender
+  \hbox to \linewidth{%
+    \vtop{%
+      \advance\hsize by -3cm
+      \raggedright
+      \@senderPostalCode \par
+      \@senderAddress \par
+      \@senderName
+    }%
+  }
+
+  \vspace{5mm}
+
+  %% Center-Right: Recipient
+  \hbox to \linewidth{%
+    \hfill
+    \vtop{%
+      \advance\hsize by -2cm
+      \raggedleft
+      \@recipientPostalCode \par
+      \vspace{2mm}
+      \@recipientAddress \par
+      \vspace{2mm}
+      \large\@recipientName 様
+    }%
+  }
+}
+
+%% \makeenvelopeback -- Back side only
+\def\makeenvelopeback{%
+  \clearpage
+  \thispagestyle{empty}%
+  \newgeometry{
+    paper=\@envWidth \@envHeight,
+    layout=\@envWidth \@envHeight,
+    nohead,
+    nofoot,
+    margin=8mm
+  }%
+  \parindent=0pt
+  \linespread{1.3}
+
+  %% Center: Sender Info
+  \vfill
+  \hbox to \linewidth{%
+    \hfill
+    \vtop{%
+      \advance\hsize by -4cm
+      \raggedcenter
+      \@senderPostalCode \par
+      \@senderAddress \par
+      \@senderName
+    }%
+    \hfill
+  }%
+  \vfill
+
+  %% Seal Mark
+  \hbox to \linewidth{%
+    \hfill
+    \Large\textbf{〆}
+    \hfill
+  }%
+}
+
+\endinput
+%%
+%% End of envelope-yoko.sty

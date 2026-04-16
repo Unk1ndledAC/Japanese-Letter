@@ -1,0 +1,229 @@
+%% envelope-tate.sty -- Vertical Envelope Style
+%% Japanese Envelope Template for Vertical Writing (直式封筒)
+%%
+%% Features:
+%% - Front: recipient postal code, address, name on right side
+%% - Back: sender info on right-lower area
+%% - Optional seal mark: 「封」or「〆」
+%%
+%% Usage:
+%%   \documentclass[tate]{jlreq}
+%%   \usepackage{envelope-tate}
+%%   \makeenvelope
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{envelope-tate}[2024/12 Japanese Vertical Envelope Style]
+
+%% ================================================
+%% Package Options
+%% ================================================
+\RequirePackage{geometry}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+\RequirePackage{plext}
+
+%% ================================================
+%% Envelope Size Options
+%% ================================================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=envTate,
+  prefix=envTate@
+}
+
+\DeclareStringOption{size}[ku]
+\DeclareVoidOption{ku}{\def\@envSize{ku}}  % Ku-gata Nagasa 3 (120mm x 235mm)
+\DeclareVoidOption{k1}{\def\@envSize{k1}}  % Ku-gata 1 (142mm x 205mm)
+\DeclareVoidOption{k2}{\def\@envSize{k2}}  % Ku-gata 2 (120mm x 176mm)
+\DeclareVoidOption{k3}{\def\@envSize{k3}}  % Ku-gata 3 (90mm x 148mm)
+\DeclareVoidOption{k4}{\def\@envSize{k4}}  % Ku-gata 4 (90mm x 205mm)
+\ProcessKeyvalOptions*\relax
+
+%% ================================================
+%% Envelope Dimensions
+%% ================================================
+\newlength{\@envWidth}
+\newlength{\@envHeight}
+
+\ifthenelse{\equal{\@envSize}{ku}}{%
+  \setlength{\@envWidth}{235mm}%
+  \setlength{\@envHeight}{120mm}%
+}{%
+  \ifthenelse{\equal{\@envSize}{k1}}{%
+    \setlength{\@envWidth}{205mm}%
+    \setlength{\@envHeight}{142mm}%
+  }{%
+    \ifthenelse{\equal{\@envSize}{k2}}{%
+      \setlength{\@envWidth}{176mm}%
+      \setlength{\@envHeight}{120mm}%
+    }{%
+      \ifthenelse{\equal{\@envSize}{k3}}{%
+        \setlength{\@envWidth}{148mm}%
+        \setlength{\@envHeight}{90mm}%
+      }{%
+        \ifthenelse{\equal{\@envSize}{k4}}{%
+          \setlength{\@envWidth}{205mm}%
+          \setlength{\@envHeight}{90mm}%
+        }{%
+          %% Default: Ku-gata Nagasa 3
+          \setlength{\@envWidth}{235mm}%
+          \setlength{\@envHeight}{120mm}%
+        }%
+      }%
+    }%
+  }%
+}
+
+%% ================================================
+%% Sender/Recipient Information
+%% ================================================
+\def\@recipientName{}%
+\def\@recipientAddress{}%
+\def\@recipientPostalCode{}%
+
+\def\@senderName{}%
+\def\@senderAddress{}%
+\def\@senderPostalCode{}%
+
+\def\@postDate{}%
+
+%% Setter Commands
+\def\setrecipientname#1{\def\@recipientName{#1}}
+\def\setrecipientaddress#1{\def\@recipientAddress{#1}}
+\def\setrecipientpostalcode#1{\def\@recipientPostalCode{#1}}
+
+\def\setsendername#1{\def\@senderName{#1}}
+\def\setsenderaddress#1{\def\@senderAddress{#1}}
+\def\setsenderpostalcode#1{\def\@senderPostalCode{#1}}
+
+\def\setpostdate#1{\def\@postDate{#1}}
+
+%% ================================================
+%% Front Side
+%% ================================================
+\def\@makeEnvelopeFront{%
+  \thispagestyle{empty}%
+  \newpage
+  \geometry{
+    paper=\@envWidth \@envHeight,
+    layout=\@envWidth \@envHeight,
+    nohead,
+    nofoot,
+    margin=5mm
+  }%
+  \pagestyle{empty}%
+  \parindent=0pt
+  \linespread{1.5}
+
+  %% Recipient Postal Code (top-right)
+  \hbox to \linewidth{%
+    \hfill
+    \@recipientPostalCode
+  }%
+  \par
+  \vspace{2mm}
+
+  %% Recipient Address
+  \parbox[t][3\baselineskip][t]{\linewidth}{%
+    \raggedleft
+    \@recipientAddress
+  }%
+  \par
+  \vspace{2mm}
+
+  %% Recipient Name
+  \hbox to \linewidth{%
+    \hfill
+    \Large\@recipientName 様
+  }%
+  \par
+
+  %% Seal Mark (optional)
+  %% \vspace{5mm}
+  %% \hbox to \linewidth{%
+  %%   \hfill
+  %%   \large\textbf{封}
+  %% }%
+}
+
+%% ================================================
+%% Back Side
+%% ================================================
+\def\@makeEnvelopeBack{%
+  \thispagestyle{empty}%
+  \newpage
+  \geometry{
+    paper=\@envWidth \@envHeight,
+    layout=\@envWidth \@envHeight,
+    nohead,
+    nofoot,
+    margin=5mm
+  }%
+  \pagestyle{empty}%
+  \parindent=0pt
+  \linespread{1.5}
+
+  %% Post Date (top-left)
+  \hbox to \linewidth{%
+    \@postDate
+  }%
+  \par
+  \vspace{3mm}
+
+  %% Sender Postal Code
+  \parbox[t][1.5\baselineskip][t]{\linewidth}{%
+    \raggedleft
+    \@senderPostalCode
+  }%
+  \par
+
+  %% Sender Address
+  \parbox[t][3\baselineskip][t]{\linewidth}{%
+    \raggedleft
+    \@senderAddress
+  }%
+  \par
+
+  %% Sender Name
+  \hbox to \linewidth{%
+    \raggedleft
+    \@senderName
+  }%
+  \par
+
+  %% Seal Mark
+  \vspace{3mm}
+  \hbox to \linewidth{%
+    \hfill
+    \large\textbf{〆}
+  }%
+}
+
+%% ================================================
+%% Combined Command
+%% ================================================
+%% Usage: \makeenvelope
+\def\makeenvelope{%
+  \@makeEnvelopeFront
+  \@makeEnvelopeBack
+}
+
+%% ================================================
+%% Front Only
+%% ================================================
+%% Usage: \makeenvelopefront
+\def\makeenvelopefront{%
+  \@makeEnvelopeFront
+}
+
+%% ================================================
+%% Back Only
+%% ================================================
+%% Usage: \makeenvelopeback
+\def\makeenvelopeback{%
+  \@makeEnvelopeBack
+}
+
+\endinput
+%%
+%% End of envelope-tate.sty

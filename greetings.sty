@@ -1,0 +1,137 @@
+%% greetings.sty — 日本語書簡のための時候の挨拶集
+%% Japanese Seasonal Greetings for Letters
+%%
+%% Usage:
+%%   \usepackage{greetings}
+%%   \January   % 1月の挨拶を出力
+%%   \SpringGreeting  % 春の挨拶を出力
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{greetings}[2024/12 Japanese Seasonal Greetings]
+
+%% ================================================
+%% 月別時候の挨拶
+%% ================================================
+
+%% 1月
+\def\@greetingJan{新春の候、严寒の折、}
+\def\@greetingJanFull{新春の候、愈发清栄のこととお慶び申し上げます。}
+
+%% 2月
+\def\@greetingFeb{立春の候、晚冬のみぎり、}
+\def\@greetingFebFull{立春の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 3月
+\def\@greetingMar{早春の候、浅春の候、}
+\def\@greetingMarFull{早春の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 4月
+\def\@greetingApr{春暖の候、桜花の候、}
+\def\@greetingAprFull{春暖の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 5月
+\def\@greetingMay{新緑の候、若葉の候、}
+\def\@greetingMayFull{新緑の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 6月
+\def\@greetingJun{梅雨の候、梅雨明けの候、}
+\def\@greetingJunFull{梅雨の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 7月
+\def\@greetingJul{盛夏の候、酷暑の折から、}
+\def\@greetingJulFull{盛夏の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 8月
+\def\@greetingAug{残暑の候、晩夏の候、}
+\def\@greetingAugFull{残暑の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 9月
+\def\@greetingSep{秋涼の候、秋晴れの候、}
+\def\@greetingSepFull{秋涼の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 10月
+\def\@greetingOct{秋深まる候、紅葉の候、}
+\def\@greetingOctFull{秋深まる候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 11月
+\def\@greetingNov{晩秋の候、寒さ増す折から、}
+\def\@greetingNovFull{晩秋の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% 12月
+\def\@greetingDec{寒冷の候、師走の候、}
+\def\@greetingDecFull{寒冷の候、愈发ご清栄のこととお慶び申し上げます。}
+
+%% ================================================
+%% 季節別挨拶
+%% ================================================
+
+%% 春
+\def\@greetingSpring{春の候、桜の花が咲く頃となりました。}
+\def\@greetingSpringFull{春の候、桜の花が咲く頃となりました。各位には愈来愈清栄のこととお慶び申し上げます。}
+
+%% 夏
+\def\@greetingSummer{盛夏の候、暑い日が続きますますが、}
+\def\@greetingSummerFull{盛夏の候、暑い日が続きますますが可愛い皆様には愈来愈ご清栄のこととお慶び申し上げます。}
+
+%% 秋
+\def\@greetingAutumn{秋涼の候、すがすがしい秋晴れの候、}
+\def\@greetingAutumnFull{秋涼の候、すがすがしい秋晴れの候可愛い皆様には愈来愈ご清栄のこととお慶び申し上げます。}
+
+%% 冬
+\def\@greetingWinter{寒冷の候、寒さが厳しくなる折から、}
+\def\@greetingWinterFull{寒冷の候、寒さが厳しくなる折から可愛い皆様には愈来愈ご清栄のこととお慶び申し上げます。}
+
+%% ================================================
+%% 汎用挨拶
+%% ================================================
+
+%% 時候の挨拶なし
+\def\@greetingNone{拜啓}
+
+%% ================================================
+%% コマンド定義
+%% ================================================
+
+%% 月別コマンド（短文）
+\def\January{\@greetingJan}
+\def\February{\@greetingFeb}
+\def\March{\@greetingMar}
+\def\April{\@greetingApr}
+\def\May{\@greetingMay}
+\def\June{\@greetingJun}
+\def\July{\@greetingJul}
+\def\August{\@greetingAug}
+\def\September{\@greetingSep}
+\def\October{\@greetingOct}
+\def\November{\@greetingNov}
+\def\December{\@greetingDec}
+
+%% 季節別コマンド
+\def\SpringGreeting{\@greetingSpring}
+\def\SummerGreeting{\@greetingSummer}
+\def\AutumnGreeting{\@greetingAutumn}
+\def\WinterGreeting{\@greetingWinter}
+
+%% ================================================
+%% 附录：結びの挨拶例
+%% ================================================
+
+%% 一般的な結び
+\def\@closingWordDefault{敬具}
+\def\@closingWordRespect{詳陳}
+
+%% ビジネス用
+\def\@closingBusiness{敬具}
+
+%% 友達用
+\def\@closingCasual{以上}
+
+%% 慶事用
+\def\@closingCelebration{敬具}
+
+%% 吊事用
+\def\@closingCondolence{合掌}
+
+\endinput
+%%
+%% End of greetings.sty

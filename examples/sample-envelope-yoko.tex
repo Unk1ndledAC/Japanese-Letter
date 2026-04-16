@@ -1,0 +1,60 @@
+% !TEX program = lualatex
+% !TEX encoding = UTF-8
+%%
+%% sample-envelope-yoko.tex -- Horizontal Envelope Sample
+%% Sample Japanese Horizontal Envelope
+%%
+%% Features:
+%% - Top-left: Sender info
+%% - Center-right: Recipient info (postal code + address + name)
+%% - Top-right: Stamp
+%%
+%% Compilation:
+%%   lualatex sample-envelope-yoko.tex
+
+\documentclass[14pt]{jlreq}
+\usepackage{geometry}
+\usepackage{../envelope-yoko}
+
+%% ================================================
+%% Envelope Size Options (optional, default is You-gata 1)
+%% ================================================
+% \usepackage[you]{envelope-yoko}  % You-gata 1 (120x176mm) - Default
+% \usepackage[y1]{envelope-yoko}    % You-gata 1
+% \usepackage[y2]{envelope-yoko}    % You-gata 2 (114x162mm)
+% \usepackage[y3]{envelope-yoko}    % You-gata 3 (120x235mm)
+
+%% ================================================
+%% Recipient Information
+%% ================================================
+\setrecipientname{佐藤 花子}
+\setrecipientaddress{%
+  大阪府大阪市北区\newline
+  梅田1-2-3
+}
+\setrecipientpostalcode{530-0001}
+
+%% ================================================
+%% Sender Information
+%% ================================================
+\setsendername{山田 太郎}
+\setsenderaddress{%
+  東京都千代田区\newline
+  永比寿町1-2-3
+}
+\setsenderpostalcode{100-8111}
+
+\begin{document}
+
+%% ================================================
+%% Create Envelope
+%% ================================================
+
+%% Create both front and back
+\makeenvelope
+
+%% Or create separately
+% \makeenvelopefront  % Front only
+% \makeenvelopeback   % Back only
+
+\end{document}

@@ -1,0 +1,36 @@
+# .gitignore for Japanese Letter LaTeX Templates
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+
+# PDF files (optional, uncomment if you don't want to track PDFs)
+# *.pdf
+
+# Editor files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build directories
+auto/
+out/
+_build/
+
+# Overleaf sync files (if using)
+*.synctex(busy)
+*.synctex.gz(busy)
+
+# Temporary files
+*.tmp
+*.bak

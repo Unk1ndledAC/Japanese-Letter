@@ -1,0 +1,85 @@
+% !TEX program = lualatex
+% !TEX encoding = UTF-8
+%%
+%% sample-casual-letter.tex -- Casual Letter Sample (Vertical)
+%% Sample Japanese Casual Letter (Vertical)
+%%
+%% Purpose: Personal letter to relatives or friends
+%% Features: Opening/closing can be omitted, casual style
+%%
+%% Compilation:
+%%   lualatex sample-casual-letter.tex
+
+\documentclass[14pt,tate]{jlreq}
+\usepackage{../letter-tate}
+
+%% ================================================
+%% Sender Information
+%% ================================================
+\setsenderName{太郎}
+\setsenderAddress{東京都渋谷区...}
+\setsenderPostalCode{150-0001}
+
+%% ================================================
+%% Recipient Information
+%% ================================================
+\setrecipientName{花子おばあちゃん}
+\setrecipientAddress{大阪府吹田市...}
+\setrecipientPostalCode{565-0001}
+
+%% ================================================
+%% Date
+%% ================================================
+\setletterDate{令和6年12月吉日}
+
+\begin{document}
+
+%% ================================================
+%% Letter Header
+%% ================================================
+\makeLetterHeader
+
+%% ================================================
+%% Body
+%% ================================================
+\begin{letter}
+
+%% Opening (casual: can be omitted)
+\@par
+\@seasonGreeting\@par
+\par
+お元気ですか。おばあちゃん。\@par
+\par
+
+%% Main Body
+\@par
+\par
+\@par
+\par
+\@par
+\par
+\@par
+\par
+
+%% Closing (casual)
+\par
+\@par
+\par
+
+%% Signature
+\makeSignature
+
+\end{letter}
+
+%% ================================================
+%% Postscript
+%% ================================================
+\begin{postscript}
+おばあちゃん、\@par
+\@par
+\par
+\@par
+以上\@par
+\end{postscript}
+
+\end{document}

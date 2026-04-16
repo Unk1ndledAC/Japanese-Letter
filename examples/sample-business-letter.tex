@@ -1,0 +1,100 @@
+% !TEX program = lualatex
+% !TEX encoding = UTF-8
+%%
+%% sample-business-letter.tex -- Business Letter Sample (Horizontal)
+%% Sample Japanese Business Letter
+%%
+%% Purpose: Formal letter between companies or business partners
+%%
+%% Compilation:
+%%   lualatex sample-business-letter.tex
+
+\documentclass[14pt]{jlreq}
+\usepackage{../letter-yoko}
+
+%% ================================================
+%% Sender Information (Company/Organization)
+%% ================================================
+\setsenderName{株式会社 サンプル商事}
+\setsenderAddress{東京都千代田区永比寿町一丁目1番1号}
+\setsenderPostalCode{100-0001}
+\setsenderPhone{TEL: 03-1234-5678}
+
+%% ================================================
+%% Recipient Information
+%% ================================================
+\setrecipientName{株式会社 テスト工業 社長}
+\setrecipientAddress{神奈川県横浜市中区本町一丁目1番1号}
+\setrecipientPostalCode{231-0001}
+
+%% ================================================
+%% Date and Subject
+%% ================================================
+\setletterDate{令和6年12月1日}
+
+%% Subject
+\def\@letterSubject{製品価格改定のお知らせ}
+\def\@letterReference{関催株式会社 御中}
+
+\begin{document}
+
+%% ================================================
+%% Letter Header
+%% ================================================
+\makeLetterHeader
+
+%% Recipient Block
+\makeRecipientBlock
+
+%% ================================================
+%% Subject Line
+%% ================================================
+\par
+\textbf{件名：\@letterSubject}
+\par
+\vspace{1zh}
+
+%% ================================================
+%% Body
+%% ================================================
+\begin{letter}
+
+%% Opening
+拝啓\@par
+\@seasonGreeting\@par
+\par
+平素は格別のご高配を賜り、厚く御礼申し上げます。\@par
+\par
+
+%% Main Body
+さて、このたび本公司では来る\@letterDate をもちまして、
+製品の一部を価格改定させていただきます。\@par
+\par
+\refuge
+今回の改定は、原料価格の高騰および輸送コストの上昇によるもので、
+やむを得ない事情所致でございます。\@par
+\par
+何卒事情をご賢察の上、従来どおりご愛顧賜りますようお願い申し上げます。\@par
+\par
+記\@par
+\par
+1. 改定日時：\@letterDate より\@par
+2. 改定内容：別紙価格のとおり\@par
+3. お問い合わせ先：営業部 TEL: 03-1234-5678\@par
+\par
+以上\@par
+
+%% Closing Greeting
+\par
+末筆ながら、皆様のますますのご発展をお祈り申し上げます。\@par
+\par
+
+%% Closing Word
+敬具\@par
+
+%% Signature
+\makeSignature
+
+\end{letter}
+
+\end{document}

@@ -1,0 +1,89 @@
+% !TEX program = lualatex
+% !TEX encoding = UTF-8
+%%
+%% sample-letter-tate.tex -- Vertical Letter Sample
+%% Sample Japanese Vertical Letter
+%%
+%% Compilation:
+%%   lualatex sample-letter-tate.tex
+%%
+%% Or use Overleaf or other online editors
+
+\documentclass[14pt,tate]{jlreq}
+\usepackage{../letter-tate}
+\usepackage{../greetings}
+
+%% ================================================
+%% Sender Information
+%% ================================================
+\setsenderName{山田 太郎}
+\setsenderAddress{東京都千代田区永比寿町一之二・三}
+\setsenderPostalCode{100-8111}
+\setsenderPhone{03-1234-5678}
+
+%% ================================================
+%% Recipient Information
+%% ================================================
+\setrecipientName{佐藤 花子}
+\setrecipientAddress{大阪府大阪市北区梅田一之二・三}
+\setrecipientPostalCode{530-0001}
+
+%% ================================================
+%% Date
+%% ================================================
+\setletterDate{令和六年十二月一日}
+
+%% ================================================
+%% Letter Settings
+%% ================================================
+\setopeninggreeting{拝啓}
+\setgreeting{\December}
+\setclosingword{敬具}
+
+\begin{document}
+
+%% ================================================
+%% Letter Header
+%% ================================================
+\makeLetterHeader
+
+%% ================================================
+%% Body
+%% ================================================
+\begin{letter}
+
+%% Opening Paragraph
+\makeOpening
+
+%% Transition
+\makeTransition
+
+\par 突然のお手紙失礼いたします。先日お願いしました案件について、
+ ご検討いただけましたでしょうか。
+
+\par 特に頂戴いたしましたフィードバックを基に、以下のように対応させて
+ いただきたいと考えております。ご確認のほどよろしくお願い申し上げます。
+
+\par 第一に、書類の整備でございます。必要的書類は全て整えておりますので、
+ ご安心ください。第二に、スケジュールについてでございますが、
+ ご提示いただいた日程に合わせて調整させていただきます。
+
+%% Closing Greeting
+\makeClosingGreeting
+
+%% Closing
+\makeClosing
+
+%% Signature
+\makeSignature
+
+\end{letter}
+
+%% ================================================
+%% Postscript (if needed)
+%% ================================================
+% \begin{postscript}
+% 同封の書類请您查收。
+% \end{postscript}
+
+\end{document}

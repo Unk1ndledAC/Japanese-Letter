@@ -1,0 +1,249 @@
+%% letter-tate.sty — 縦書き日本語書簡スタイル
+%% Japanese Letter Template for Vertical Writing (縦書き)
+%%
+%% Usage:
+%%   \documentclass[14pt,tate]{jlreq}
+%%   \usepackage{letter-tate}
+%%
+%% Options:
+%%   paper=A4 (default), A5, B5
+%%   fontsize=11pt (default), 12pt, 14pt
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{letter-tate}[2024/12 Japanese Vertical Letter Style]
+
+%% ================================================
+%% Package Options
+%% ================================================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=letterTate,
+  prefix=letterTate@
+}
+
+\DeclareStringOption{paper}[A4]
+\DeclareStringOption{fontsize}[11pt]
+\ProcessKeyvalOptions*\relax
+
+%% ================================================
+%% Required Packages
+%% ================================================
+\RequirePackage{geometry}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+
+%% ================================================
+%% Page Layout (縦書き)
+%% ================================================
+\geometry{
+  paper=\letterTate@paper,
+  landscape=false,
+  hmargin=20mm,
+  vmargin=25mm,
+  headheight=0pt,
+  headsep=0pt,
+  footskip=0pt
+}
+
+%% ================================================
+%% Sender Information
+%% ================================================
+\def\@senderName{}
+\def\@senderAddress{}
+\def\@senderPostalCode{}
+\def\@senderPhone{}
+
+%% Recipient Information
+\def\@recipientName{}
+\def\@recipientAddress{}
+\def\@recipientPostalCode{}
+
+%% Date
+\def\@letterDate{\iftombow\else\today\fi}
+
+%% Opening/Closing
+\def\@openingWord{}
+\def\@closingWord{}
+\def\@seasonGreeting{}
+
+%% Setter Commands
+\def\setsenderName#1{\def\@senderName{#1}}
+\def\setsenderAddress#1{\def\@senderAddress{#1}}
+\def\setsenderPostalCode#1{\def\@senderPostalCode{#1}}
+\def\setsenderPhone#1{\def\@senderPhone{#1}}
+
+\def\setrecipientName#1{\def\@recipientName{#1}}
+\def\setrecipientAddress#1{\def\@recipientAddress{#1}}
+\def\setrecipientPostalCode#1{\def\@recipientPostalCode{#1}}
+
+\def\setletterDate#1{\def\@letterDate{#1}}
+
+%% ================================================
+%% Opening Greeting Settings
+%% ================================================
+\def\@openingWordDefault{拝啓}
+
+\def\setopeninggreeting#1{%
+  \def\@openingWord{#1}
+}
+
+\def\setclosingword#1{%
+  \def\@closingWord{#1}
+}
+
+\def\setgreeting#1{%
+  \def\@seasonGreeting{#1}
+}
+
+%% ================================================
+%% Letter Header (縦書き用)
+%% ================================================
+
+%% 右上の宛名 (縦書きでは右側上部)
+\def\makeRecipientHeader{%
+  \par
+  \hbox to 0pt{%
+    \vtop to 0pt{%
+      \raggedleft
+      \@recipientPostalCode \par
+      \@recipientAddress \par
+      \@recipientName 様
+      \vss
+    }%
+    \hss
+  }%
+  \par
+  \vspace{2\baselineskip}
+}
+
+%% 左下の差出人情報
+\def\makeSenderFooter{%
+  \par
+  \hbox to 0pt{%
+    \vbox to 0pt{%
+      \raggedright
+      \@senderPostalCode \par
+      \@senderAddress \par
+      \@senderName \par
+      \@senderPhone
+      \vss
+    }%
+    \hss
+  }%
+  \par
+}
+
+%% 日付 (左上)
+\def\makeDateHeader{%
+  \par
+  \hbox to 0pt{%
+    \vtop to 0pt{%
+      \raggedright
+      \@letterDate
+      \vss
+    }%
+    \hss
+  }%
+  \par
+}
+
+%% ================================================
+%% Full Letter Header (統合ヘッダー)
+%% ================================================
+\def\makeLetterHeader{%
+  \par
+  %% 日付 (左上)
+  \makeDateHeader
+  %% 宛名 (右上)
+  \makeRecipientHeader
+}
+
+%% ================================================
+%% Letter Body Structure
+%% ================================================
+
+%% 前文 (頭語・時候の挨拶)
+\def\makeOpening{%
+  \par
+  \vskip 1\baselineskip
+  \@openingWord\@par
+  \@seasonGreeting\@par
+  各位方にはますますご清栄のこととお慶び申し上げます。\@par
+  \vskip 1\baselineskip
+}
+
+%% 本文導入
+\def\makeTransition{%
+  さて%
+}
+
+%% 結びの挨拶
+\def\makeClosingGreeting{%
+  \par
+  \vskip 1\baselineskip
+  末筆ながら、メンバーの皆々様のますますのご健勝とご活躍をお祈り申し上げます。\@par
+  \vskip 1\baselineskip
+}
+
+%% 結びの言葉
+\def\makeClosing{%
+  \@closingWord\@par
+  \par
+}
+
+%% 署名
+\def\makeSignature{%
+  \par
+  \vskip 1\baselineskip
+  \hbox to 0pt{%
+    \vbox to 0pt{%
+      \raggedleft
+      \hfill
+      \@senderName (印)\par
+      \vss
+    }%
+    \hss
+  }%
+  \par
+}
+
+%% ================================================
+%% Letter Environment
+%% ================================================
+\newenvironment{letter}{%
+  \par
+}{%
+  \par
+}
+
+%% ================================================
+%% Postscript (附言)
+%% ================================================
+\newenvironment{postscript}{%
+  \par
+  \vskip 1\baselineskip
+  \textbf{記}\par
+}{%
+  \par
+  \textbf{以上}\par
+}
+
+%% ================================================
+%% Print Layout Commands
+%% ================================================
+
+%% 印刷用ページクリア
+\def\clearpageforprint{%
+  \clearpage
+}
+
+%% 用紙端のトンボ表示（印刷用）
+\def\showtombow{%
+  \RequirePackage{eepic}
+  \RequirePackage{dvidriver}
+  \RequirePackage{tombow}
+}
+
+\endinput
+%%
+%% End of letter-tate.sty

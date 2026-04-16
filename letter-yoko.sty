@@ -1,0 +1,244 @@
+%% letter-yoko.sty -- Horizontal Japanese Letter Style
+%% Japanese Letter Template for Horizontal Writing (横書き)
+%%
+%% Usage:
+%%   \documentclass[14pt]{jlreq}
+%%   \usepackage{letter-yoko}
+%%
+%% Options:
+%%   paper=A4 (default), A5, B5
+%%   fontsize=11pt (default), 12pt, 14pt
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{letter-yoko}[2024/12 Japanese Horizontal Letter Style]
+
+%% ================================================
+%% Package Options
+%% ================================================
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=letterYoko,
+  prefix=letterYoko@
+}
+
+\DeclareStringOption{paper}[A4]
+\DeclareStringOption{fontsize}[11pt]
+\ProcessKeyvalOptions*\relax
+
+%% ================================================
+%% Required Packages
+%% ================================================
+\RequirePackage{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage{calc}
+
+%% ================================================
+%% Page Layout (横書き)
+%% ================================================
+\geometry{
+  paper=\letterYoko@paper,
+  layout=\letterYoko@paper,
+  landscape=false,
+  hmargin=25mm,
+  vmargin=20mm,
+  headheight=0pt,
+  headsep=0pt,
+  footskip=0pt
+}
+
+%% ================================================
+%% Font Settings
+%% ================================================
+\setminchofont{Mincho}       % Mincho (明朝体)
+\setlightboxfont{Mincho}     % Light Gothic (ライトゴシック)
+\setsansfont{Gothic}         % Gothic (ゴシック体)
+
+%% ================================================
+%% Letter Elements Configuration
+%% ================================================
+
+%% Sender Information (差出人情報)
+\def\@senderName{}
+\def\@senderAddress{}
+\def\@senderPostalCode{}
+\def\@senderPhone{}
+
+%% Recipient Information (宛名人情報)
+\def\@recipientName{}
+\def\@recipientAddress{}
+\def\@recipientPostalCode{}
+
+%% Date (日付)
+\def\@letterDate{\today}
+
+%% Related Variables
+\def\@salutation{}
+\def\@closingWord{}
+\def\@seasonGreeting{}
+
+%% Setter Commands
+\def\setsenderName#1{\def\@senderName{#1}}
+\def\setsenderAddress#1{\def\@senderAddress{#1}}
+\def\setsenderPostalCode#1{\def\@senderPostalCode{#1}}
+\def\setsenderPhone#1{\def\@senderPhone{#1}}
+
+\def\setrecipientName#1{\def\@recipientName{#1}}
+\def\setrecipientAddress#1{\def\@recipientAddress{#1}}
+\def\setrecipientPostalCode#1{\def\@recipientPostalCode{#1}}
+
+\def\setletterDate#1{\def\@letterDate{#1}}
+
+%% ================================================
+%% Opening Greeting (頭語・時候の挨拶)
+%% ================================================
+%% Default Opening Word (一般的な頭語)
+\def\@openingWordDefault{拝啓}
+
+%% Sets the opening greeting
+%% Usage: \setopeninggreeting{拝啓}
+\def\setopeninggreeting#1{%
+  \def\@openingWord{#1}
+}
+
+%% Sets the closing word
+%% Usage: \setclosingword{敬具}
+\def\setclosingword#1{%
+  \def\@closingWord{#1}
+}
+
+%% Sets the seasonal greeting
+%% Usage: \setgreeting{桜の花の候、}
+\def\setgreeting#1{%
+  \def\@seasonGreeting{#1}
+}
+
+%% ================================================
+%% Letter Header (書簡ヘッダー)
+%% ================================================
+\def\makeLetterHeader{%
+  \par
+  %% Sender Information (差出人情報) - Top Left
+  \hbox to \linewidth{%
+    \vtop{%
+      \advance\hsize by -5cm
+      \raggedright
+      \@senderPostalCode \par
+      \@senderAddress \par
+      \@senderName \par
+      \@senderPhone
+    }%
+    \hfill
+    %% Date (日付) - Top Right
+    \vtop{%
+      \advance\hsize by -5cm
+      \raggedleft
+      \@letterDate
+    }%
+  }%
+  \par
+  \vspace{3zh}
+}
+
+%% ================================================
+%% Recipient Block (宛名ブロック)
+%% ================================================
+\def\makeRecipientBlock{%
+  \par
+  \hbox to \linewidth{%
+    \hfill
+    \vtop{%
+      \advance\hsize by -3cm
+      \raggedright
+      \@recipientPostalCode \par
+      \@recipientAddress \par
+      \@recipientName 様
+    }%
+  }%
+  \par
+  \vspace{2zh}
+}
+
+%% ================================================
+%% Letter Body (書簡本体)
+%% ================================================
+%% Opening Paragraph (頭語・前文)
+\def\makeOpening{%
+  \par
+  \@openingWord\@par
+  \@seasonGreeting\par
+  各位方にはますますご清栄のこととお慶び申し上げます。\par
+  \par
+}
+
+%% Transition to Body (本文の導入部分)
+\def\makeTransition{%
+  さて%
+}
+
+%% Closing Greeting (結びの挨拶)
+\def\makeClosingGreeting{%
+  \par
+  末筆ながら、メンバーの皆々様のますますのご健勝とご活躍をお祈り申し上げます。\par
+  \par
+}
+
+%% Closing Word (結びの言葉)
+\def\makeClosing{%
+  \@closingWord\@par
+  \par
+}
+
+%% Signature Block (署名ブロック)
+\def\makeSignature{%
+  \par
+  \vspace{1zh}
+  \hbox to \linewidth{%
+    \hfill
+    \vtop{%
+      \advance\hsize by -3cm
+      \raggedleft
+      \@senderName (署名)\par
+    }%
+  }%
+  \par
+}
+
+%% Postscript (附言)
+%% Usage: \begin{postscript} ... \end{postscript}
+\newenvironment{postscript}{%
+  \par
+  \vspace{1zh}
+  \textbf{記}\par
+}{%
+  \par
+  \textbf{以上}\par
+}
+
+%% ================================================
+%% Complete Letter Command
+%% ================================================
+%% Usage: \begin{letter} ... \end{letter}
+\newenvironment{letter}{%
+  \par
+}{%
+  \par
+}
+
+%% ================================================
+%% Utility Commands
+%% ================================================
+
+%% Paragraph Indentation (段落の開始)
+\def\@parindent{\hspace{1em}}
+
+%% Vertical Spacing Unit (縦方向の単位)
+\def\@baselineskip{1.7zh}
+
+%% Clear page for printing
+\def\clearpageforprint{%
+  \clearpage
+}
+
+\endinput
+%%
+%% End of letter-yoko.sty

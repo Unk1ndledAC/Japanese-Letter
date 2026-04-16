@@ -1,0 +1,67 @@
+% !TEX program = lualatex
+% !TEX encoding = UTF-8
+%%
+%% sample-envelope-tate.tex -- Vertical Envelope Sample
+%% Sample Japanese Vertical Envelope
+%%
+%% Features:
+%% - Front: postal code + address + name (top-right)
+%% - Back: date (top-left) + postal code/address/name (right-lower) + seal mark
+%%
+%% Compilation:
+%%   lualatex sample-envelope-tate.tex
+
+\documentclass[tate]{jlreq}
+\usepackage{geometry}
+\usepackage{../envelope-tate}
+
+%% ================================================
+%% Envelope Size Options (optional, default is Ku-gata Nagasa 3)
+%% ================================================
+% \usepackage[ku]{envelope-tate}  % Ku-gata Nagasa 3 (120x235mm)
+% \usepackage[k1]{envelope-tate}  % Ku-gata 1 (142x205mm)
+% \usepackage[k2]{envelope-tate}  % Ku-gata 2 (120x176mm)
+% \usepackage[k3]{envelope-tate}  % Ku-gata 3 (90x148mm)
+% \usepackage[k4]{envelope-tate}  % Ku-gata 4 (90x205mm)
+
+%% ================================================
+%% Recipient Information
+%% ================================================
+\setrecipientname{佐藤 花子 様}
+\setrecipientaddress{%
+  大阪府\newline
+  大阪市北区\newline
+  梅田一之二・三
+}
+\setrecipientpostalcode{530-0001}
+
+%% ================================================
+%% Sender Information
+%% ================================================
+\setsendername{山田 太郎}
+\setsenderaddress{%
+  東京都\newline
+  千代田区\newline
+  永比寿町一之二・三
+}
+\setsenderpostalcode{100-8111}
+
+%% ================================================
+%% Post Date
+%% ================================================
+\setpostdate{令和六年十二月一日}
+
+\begin{document}
+
+%% ================================================
+%% Create Envelope
+%% ================================================
+
+%% Create both front and back
+\makeenvelope
+
+%% Or create separately
+% \makeenvelopefront  % Front only
+% \makeenvelopeback   % Back only
+
+\end{document}

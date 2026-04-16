@@ -1,0 +1,99 @@
+% !TEX program = lualatex
+% !TEX encoding = UTF-8
+%%
+%% sample-letter-yoko.tex -- Horizontal Letter Sample
+%% Sample Japanese Horizontal Letter
+%%
+%% Compilation:
+%%   lualatex sample-letter-yoko.tex
+%%
+%% Or use Overleaf or other online editors
+
+\documentclass[14pt]{jlreq}
+
+%% Load style files
+\usepackage{../letter-yoko}
+\usepackage{../greetings}
+
+%% ================================================
+%% Sender Information
+%% ================================================
+\setsenderName{山田 太郎}
+\setsenderAddress{東京都千代田区永比寿町1-2-3}
+\setsenderPostalCode{100-8111}
+\setsenderPhone{03-1234-5678}
+
+%% ================================================
+%% Recipient Information
+%% ================================================
+\setrecipientName{佐藤 花子}
+\setrecipientAddress{大阪府大阪市北区梅田1-2-3}
+\setrecipientPostalCode{530-0001}
+
+%% ================================================
+%% Date (Japanese or Western calendar)
+%% ================================================
+\setletterDate{令和6年12月1日}
+
+%% ================================================
+%% Letter Settings
+%% ================================================
+%% Opening word (required: 拝啓/再啓/etc.)
+\setopeninggreeting{拝啓}
+
+%% Seasonal greeting
+\setgreeting{\December}
+
+%% Closing word (must match opening)
+\setclosingword{敬具}
+
+\begin{document}
+
+%% ================================================
+%% Letter Header
+%% ================================================
+\makeLetterHeader
+
+%% Recipient Block
+\makeRecipientBlock
+
+%% ================================================
+%% Body
+%% ================================================
+\begin{letter}
+
+%% Opening Paragraph
+\makeOpening
+
+%% Transition
+\makeTransition
+
+\par 突然のご連絡失礼いたします。先日お願いしました案件について、
+ ご検討いただけましたでしょうか。
+
+\par 特に頂戴いたしましたフィードバックを基に、以下のように対応させて
+ いただきたいと考えております。ご確認のほどよろしくお願い申し上げます。
+
+\par 第一に、書類の整備でございます。必要的書類は全て整えておりますので、
+ ご安心ください。第二に、スケジュールについてでございますが、
+ ご提示いただいた日程に合わせて調整させていただきます。
+
+%% Closing Greeting
+\makeClosingGreeting
+
+%% Closing
+\makeClosing
+
+%% Signature
+\makeSignature
+
+\end{letter}
+
+%% ================================================
+%% Postscript (if needed)
+%% ================================================
+% \begin{postscript}
+% 同封の書類请您查收。
+% \end{postscript}
+
+\end{document}
