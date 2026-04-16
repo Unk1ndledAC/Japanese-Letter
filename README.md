@@ -20,13 +20,13 @@ Japanese letters have a distinctive structure different from Western letters:
 
 ### Features
 
-- ✅ **letter-yoko.sty**: Horizontal writing style
-- ✅ **letter-tate.sty**: Vertical writing style (tategaki)
-- ✅ **envelope-yoko.sty**: Western-style horizontal envelope
-- ✅ **envelope-tate.sty**: Traditional vertical envelope
-- ✅ **greetings.sty**: Seasonal greetings collection (12 months + 4 seasons)
-- ✅ Sample files for each template type
-- ✅ Both LuaLaTeX and upLaTeX compatible
+- **letter-yoko.sty**: Horizontal writing style
+- **letter-tate.sty**: Vertical writing style (tategaki)
+- **envelope-yoko.sty**: Western-style horizontal envelope
+- **envelope-tate.sty**: Traditional vertical envelope
+- **greetings.sty**: Seasonal greetings collection (12 months + 4 seasons)
+- Sample files for each template type
+- Both LuaLaTeX and upLaTeX compatible
 
 ### Requirements
 
@@ -37,14 +37,8 @@ Japanese letters have a distinctive structure different from Western letters:
 
 ### Quick Start
 
-#### 1. Clone or Download
 
-```bash
-git clone https://github.com/YOUR_USERNAME/japanese-letter-latex.git
-cd japanese-letter-latex
-```
-
-#### 2. Choose Your Template
+#### Choose Your Template
 
 **Horizontal Letter (横書き書簡):**
 ```latex
@@ -60,7 +54,7 @@ cd japanese-letter-latex
 \usepackage{letter-tate}
 ```
 
-#### 3. Fill in Your Information
+#### Fill in Your Information
 
 ```latex
 % Sender
@@ -82,7 +76,7 @@ cd japanese-letter-latex
 \setclosingword{敬具}
 ```
 
-#### 4. Write Your Letter
+#### Write Your Letter
 
 ```latex
 \begin{document}
